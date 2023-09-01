@@ -9,9 +9,20 @@ const usersRouter = require('./routes/users');
 const catalogRouter = require("./routes/catalog");
 
 const compression = require("compression");
+const helmet = require("helmet");
 
 // Create the Express application object
 const app = express();
+
+// Add helmet to the middleware chain.
+// Set CSP headers to allow our Bootstrap and Jquery to be served
+app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+      },
+    }),
+  );
 
 // Set up mongoose connection
 const dev_db_url = "mongodb+srv://your_user_name:your_password@cluster0.lz91hw2.mongodb.net/local_library?retryWrites=true&w=majority";
