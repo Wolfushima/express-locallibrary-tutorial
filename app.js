@@ -8,6 +8,9 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const catalogRouter = require("./routes/catalog");
 
+const compression = require("compression");
+
+// Create the Express application object
 const app = express();
 
 // Set up mongoose connection
@@ -27,6 +30,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(compression()); // Compress all routes
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
